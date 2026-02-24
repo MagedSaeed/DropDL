@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bg)"/>
+  <!-- Source circles -->
+  <circle cx="18" cy="11" r="3" fill="white" opacity="0.5"/>
+  <circle cx="32" cy="11" r="3" fill="white"/>
+  <circle cx="46" cy="11" r="3" fill="white" opacity="0.5"/>
+  <!-- Download arrow -->
+  <line x1="32" y1="20" x2="32" y2="39" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <path d="M22 32 L32 43 L42 32" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Simple tray -->
+  <line x1="16" y1="53" x2="48" y2="53" stroke="white" stroke-width="4" stroke-linecap="round"/>
+</svg>
