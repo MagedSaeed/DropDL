@@ -31,18 +31,13 @@ export default function UrlInputBar({ value, onChange, onSubmit, loading, error 
     <div>
       <form onSubmit={handleSubmit} className="relative">
         <div className="relative flex items-center">
-          <div className="absolute left-4 text-zinc-400 dark:text-zinc-500 pointer-events-none">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-1.757l4.5-4.5a4.5 4.5 0 00-6.364-6.364l-1.757 1.757" />
-            </svg>
-          </div>
           <input
             type="url"
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Paste a video or audio URL here..."
-            className="input-field pl-12 pr-32 py-4 text-base"
+            className="input-field pr-32 py-4 text-base"
             aria-label="Video or audio URL"
             autoFocus
           />

@@ -3,6 +3,22 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTheme } from '../../contexts/ThemeContext'
 
+function GitHubLink() {
+  return (
+    <a
+      href="https://github.com/MagedSaeed/DropDL"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+      title="View on GitHub"
+    >
+      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+      </svg>
+    </a>
+  )
+}
+
 function ThemeToggle() {
   const { mode, setMode } = useTheme()
   const modes = ['light', 'dark', 'system'] as const
@@ -13,7 +29,7 @@ function ThemeToggle() {
   return (
     <button
       onClick={next}
-      className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+      className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-700 transition-colors"
       title={`Theme: ${mode}`}
     >
       {mode === 'light' && (
@@ -58,12 +74,12 @@ export default function Navbar() {
   }, [location.pathname])
 
   return (
-    <nav className="bg-white border-b border-zinc-200 dark:bg-zinc-900 dark:border-zinc-800">
+    <nav className="bg-white border-b border-zinc-200 dark:bg-zinc-800 dark:border-zinc-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           <Link
             to="/app"
-            className="flex items-center gap-2 text-base font-bold tracking-tight text-zinc-900 hover:text-violet-600 transition-colors dark:text-zinc-100 dark:hover:text-violet-400"
+            className="flex items-center gap-2 text-base font-bold tracking-tight text-zinc-900 hover:text-zinc-600 transition-colors dark:text-zinc-100 dark:hover:text-zinc-400"
           >
             DropDL
           </Link>
@@ -73,6 +89,7 @@ export default function Navbar() {
               <>
                 <div className="w-16 h-7 bg-zinc-100 dark:bg-zinc-800 rounded-md animate-pulse" />
                 <div className="w-px h-5 bg-zinc-200 dark:bg-zinc-700 mx-1" />
+                <GitHubLink />
                 <ThemeToggle />
               </>
             ) : user ? (
@@ -81,14 +98,14 @@ export default function Navbar() {
                 <div className="hidden sm:flex items-center gap-1">
                   <Link
                     to="/app/history"
-                    className="text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 px-2.5 py-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                    className="text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 px-2.5 py-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors"
                   >
                     History
                   </Link>
                   <div className="relative" ref={menuRef}>
                     <button
                       onClick={() => setMenuOpen(!menuOpen)}
-                      className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                      className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors"
                     >
                       {user.avatar_url ? (
                         <img
@@ -97,7 +114,7 @@ export default function Navbar() {
                           className="w-7 h-7 rounded-full ring-1 ring-zinc-200 dark:ring-zinc-700"
                         />
                       ) : (
-                        <div className="w-7 h-7 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center text-xs font-bold dark:bg-violet-900 dark:text-violet-300">
+                        <div className="w-7 h-7 rounded-full bg-zinc-200 text-zinc-700 flex items-center justify-center text-xs font-bold dark:bg-zinc-700 dark:text-zinc-300">
                           {(user.email || user.username)?.charAt(0).toUpperCase()}
                         </div>
                       )}
@@ -118,7 +135,7 @@ export default function Navbar() {
                       <div className="absolute right-0 top-full mt-1.5 w-48 bg-white rounded-lg border border-zinc-200 shadow-lg py-1 z-50 dark:bg-zinc-800 dark:border-zinc-700">
                         <Link
                           to="/app/history"
-                          className="flex items-center gap-2.5 w-full px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-750 transition-colors"
+                          className="flex items-center gap-2.5 w-full px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-700 transition-colors"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -141,13 +158,14 @@ export default function Navbar() {
 
                   <div className="w-px h-5 bg-zinc-200 dark:bg-zinc-700 mx-2" />
                 </div>
+                <GitHubLink />
                 <ThemeToggle />
 
                 {/* Mobile hamburger button */}
                 <div className="sm:hidden ml-1">
                   <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+                    className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-700 transition-colors"
                   >
                     {mobileMenuOpen ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,6 +189,7 @@ export default function Navbar() {
                   <span className="sm:hidden">Sign in</span>
                 </a>
                 <div className="w-px h-5 bg-zinc-200 dark:bg-zinc-700 mx-1" />
+                <GitHubLink />
                 <ThemeToggle />
               </>
             )}
@@ -187,7 +206,7 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
           />
           {/* Menu panel */}
-          <div className="relative bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-zinc-200/50 dark:border-zinc-800/50 shadow-lg">
+          <div className="relative bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md border-b border-zinc-200/50 dark:border-zinc-700/50 shadow-lg">
             <div className="py-2">
               {/* User info */}
               <div className="flex items-center gap-3 px-4 py-2.5">
@@ -198,7 +217,7 @@ export default function Navbar() {
                     className="w-8 h-8 rounded-full ring-1 ring-zinc-200 dark:ring-zinc-700"
                   />
                 ) : (
-                  <div className="w-8 h-8 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center text-sm font-bold dark:bg-violet-900 dark:text-violet-300">
+                  <div className="w-8 h-8 rounded-full bg-zinc-200 text-zinc-700 flex items-center justify-center text-sm font-bold dark:bg-zinc-700 dark:text-zinc-300">
                     {(user.email || user.username)?.charAt(0).toUpperCase()}
                   </div>
                 )}
@@ -207,11 +226,11 @@ export default function Navbar() {
                 </span>
               </div>
 
-              <div className="border-t border-zinc-100 dark:border-zinc-800 my-1" />
+              <div className="border-t border-zinc-100 dark:border-zinc-700 my-1" />
 
               <Link
                 to="/app/history"
-                className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-medium text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800 transition-colors"
+                className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-medium text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-700 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />

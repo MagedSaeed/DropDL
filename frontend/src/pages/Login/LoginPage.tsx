@@ -20,7 +20,7 @@ export default function LoginPage() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-violet-500 border-t-transparent mx-auto mb-4" />
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-zinc-800 border-t-transparent mx-auto mb-4 dark:border-zinc-200 dark:border-t-transparent" />
           <p className="text-zinc-500 dark:text-zinc-400 text-sm">Completing sign in...</p>
         </div>
       </div>

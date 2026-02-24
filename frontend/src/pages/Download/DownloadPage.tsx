@@ -56,19 +56,6 @@ export default function DownloadPage() {
   return (
     <ErrorBoundary>
       <div className="space-y-6">
-        {/* Hero section */}
-        <div className="text-center pt-4 pb-2">
-          <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2 tracking-tight">
-            Download from 1000+ sites
-          </h1>
-          <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400">
-            Paste a URL to download videos, audio, and more
-          </p>
-          <div className="mt-4">
-            <SiteBanner />
-          </div>
-        </div>
-
         {/* URL Input */}
         <UrlInputBar
           value={url}
@@ -77,6 +64,8 @@ export default function DownloadPage() {
           loading={fetchLoading}
           error={fetchError}
         />
+
+        <SiteBanner />
 
         {/* Loading skeleton */}
         {fetchLoading && (

@@ -10,20 +10,32 @@ export default function VideoInfoCard({ info }: VideoInfoCardProps) {
     <div className="card flex flex-col sm:flex-row gap-4 overflow-hidden">
       {/* Thumbnail */}
       {info.thumbnail && (
-        <div className="shrink-0 sm:w-56">
+        <a
+          href={info.webpage_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="shrink-0 sm:w-56 block"
+        >
           <img
             src={info.thumbnail}
             alt={info.title}
-            className="w-full sm:w-56 h-auto rounded-lg object-cover aspect-video bg-zinc-100 dark:bg-zinc-700"
+            className="w-full sm:w-56 h-auto rounded-lg object-cover aspect-video bg-zinc-100 dark:bg-zinc-700 hover:opacity-80 transition-opacity"
             loading="lazy"
           />
-        </div>
+        </a>
       )}
 
       {/* Info */}
       <div className="flex-1 min-w-0">
         <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 line-clamp-2 mb-1.5">
-          {info.title}
+          <a
+            href={info.webpage_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
+            {info.title}
+          </a>
         </h3>
 
         {info.uploader && (
@@ -42,12 +54,12 @@ export default function VideoInfoCard({ info }: VideoInfoCardProps) {
             </span>
           )}
 
-          <span className="inline-flex items-center px-2 py-1 rounded-md bg-violet-50 text-violet-700 font-medium dark:bg-violet-950 dark:text-violet-300">
+          <span className="inline-flex items-center px-2 py-1 rounded-md bg-zinc-100 text-zinc-700 font-medium dark:bg-zinc-700 dark:text-zinc-300">
             {info.extractor}
           </span>
 
           {info.is_playlist && info.playlist_count != null && (
-            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
               </svg>

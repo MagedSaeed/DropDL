@@ -7,7 +7,7 @@ export default function ProtectedRoute() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500" />
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-zinc-800 dark:border-zinc-200" />
       </div>
     )
   }

@@ -11,7 +11,7 @@ export default function HomePage() {
           DropDL
         </h1>
         <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 max-w-lg mx-auto mb-8 leading-relaxed">
-          Drop a link, download it. A sleek web interface for downloading videos and audio from 1000+ sites.
+          A web interface for yt-dlp
         </p>
 
         {loading ? (

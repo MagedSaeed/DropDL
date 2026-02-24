@@ -89,7 +89,7 @@ export default function HistoryPage() {
               {/* Actions */}
               <button
                 onClick={() => deleteRecord(record.id)}
-                className="shrink-0 p-2 text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-750"
+                className="shrink-0 p-2 text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-700"
                 aria-label="Delete from history"
                 title="Delete from history"
               >
