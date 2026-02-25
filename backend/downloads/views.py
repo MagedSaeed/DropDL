@@ -1,8 +1,6 @@
 import logging
 
 from django.http import Http404, StreamingHttpResponse
-from django.utils.decorators import method_decorator
-from django.views.decorators.clickjacking import xframe_options_sameorigin
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -39,14 +37,23 @@ class ExtractInfoView(APIView):
         return Response(info)
 
 
-@method_decorator(xframe_options_sameorigin, name="dispatch")
 class StreamDownloadView(APIView):
-    """POST /api/download/ - Stream a file download to the browser."""
+    """GET/POST /api/download/ - Stream a file download to the browser.
+
+    GET  with query params is used by the browser for native downloads.
+    POST with JSON body is kept for API clients.
+    """
 
     permission_classes = [AllowAny]
 
+    def get(self, request):
+        return self._handle_download(request, request.query_params)
+
     def post(self, request):
-        serializer = DownloadRequestSerializer(data=request.data)
+        return self._handle_download(request, request.data)
+
+    def _handle_download(self, request, incoming_data):
+        serializer = DownloadRequestSerializer(data=incoming_data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
 
