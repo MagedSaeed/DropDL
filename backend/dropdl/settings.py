@@ -111,6 +111,8 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 20,
+    # Disable ?format= query param so it doesn't clash with download options
+    "URL_FORMAT_OVERRIDE": None,
 }
 
 # CORS (development only)
