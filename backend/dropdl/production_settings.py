@@ -36,6 +36,9 @@ SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
+# PO Token server for yt-dlp YouTube bot bypass
+POT_SERVER_URL = config("POT_SERVER_URL", default=None)
+
 # Django-Q2 (Redis broker for production)
 Q_CLUSTER = {
     "name": "dropdl_production",

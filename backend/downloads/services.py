@@ -13,13 +13,23 @@ logger = logging.getLogger(__name__)
 TEMP_DIR = getattr(settings, "DOWNLOAD_TEMP_DIR", Path(tempfile.gettempdir()) / "dropdl")
 
 
+def _get_pot_extractor_args() -> dict:
+    """Return yt-dlp extractor_args for PO token server if configured."""
+    pot_url = getattr(settings, "POT_SERVER_URL", None)
+    if pot_url:
+        return {"youtubepot-bgutilhttp": {"base_url": [pot_url]}}
+    return {}
+
+
 def extract_video_info(url: str) -> dict:
     """Extract video metadata without downloading."""
+    pot_args = _get_pot_extractor_args()
     ydl_opts = {
         "quiet": True,
         "no_warnings": True,
         "extract_flat": False,
         "skip_download": True,
+        **({"extractor_args": pot_args} if pot_args else {}),
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -102,10 +112,12 @@ def _needs_processing(options: dict) -> bool:
 
 def _get_direct_url(url: str, format_id: str) -> tuple[str, dict, str]:
     """Get the direct download URL and metadata for a single format."""
+    pot_args = _get_pot_extractor_args()
     ydl_opts = {
         "quiet": True,
         "no_warnings": True,
         "format": format_id,
+        **({"extractor_args": pot_args} if pot_args else {}),
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=False)
@@ -160,12 +172,14 @@ def _stream_processed(url: str, options: dict) -> tuple:
     """Download with yt-dlp processing, then stream the result."""
     tmp_dir = Path(tempfile.mkdtemp(dir=TEMP_DIR))
 
+    pot_args = _get_pot_extractor_args()
     ydl_opts = {
         "outtmpl": str(tmp_dir / "%(title)s.%(ext)s"),
         "quiet": True,
         "no_warnings": True,
         "noprogress": True,
         "format": options.get("format", "best"),
+        **({"extractor_args": pot_args} if pot_args else {}),
     }
 
     if options.get("extract_audio"):
