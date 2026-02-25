@@ -84,6 +84,11 @@ class StreamDownloadView(APIView):
             Download.objects.create(
                 user=request.user,
                 url=data["url"],
+                title=data.get("title", ""),
+                thumbnail=data.get("thumbnail", ""),
+                duration=data.get("duration"),
+                uploader=data.get("uploader", ""),
+                source_site=data.get("source_site", ""),
                 options=options,
                 file_name=filename,
                 mime_type=content_type,

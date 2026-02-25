@@ -59,6 +59,12 @@ export interface DownloadOptions {
   embed_subtitles: boolean
   playlist_items: string
   rate_limit: string
+  // Optional metadata saved to history
+  title?: string
+  thumbnail?: string
+  duration?: number | null
+  uploader?: string
+  source_site?: string
 }
 
 export interface DownloadRecord {

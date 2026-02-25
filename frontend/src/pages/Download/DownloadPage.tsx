@@ -38,12 +38,20 @@ export default function DownloadPage() {
   const handleDownload = useCallback(async () => {
     if (!url.trim()) return
     try {
-      await startDownload({ url: url.trim(), ...options })
+      await startDownload({
+        url: url.trim(),
+        ...options,
+        title: videoInfo?.title,
+        thumbnail: videoInfo?.thumbnail,
+        duration: videoInfo?.duration,
+        uploader: videoInfo?.uploader,
+        source_site: videoInfo?.extractor,
+      })
       showToast('success', 'Download started! Check your browser downloads.')
     } catch {
       // error is handled in the hook
     }
-  }, [url, options, startDownload, showToast])
+  }, [url, options, videoInfo, startDownload, showToast])
 
   const handleUrlChange = useCallback(
     (newUrl: string) => {

@@ -25,6 +25,7 @@ export function useDownload() {
       // This is the same pattern used by anonymous-hf (<a href="...">).
       const params = new URLSearchParams()
       for (const [key, value] of Object.entries(options)) {
+        if (value == null || value === '') continue
         if (Array.isArray(value)) {
           for (const item of value) params.append(key, String(item))
         } else {

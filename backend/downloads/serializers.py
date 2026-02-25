@@ -29,6 +29,13 @@ class DownloadRequestSerializer(serializers.Serializer):
     playlist_items = serializers.CharField(required=False, default="", allow_blank=True)
     rate_limit = serializers.CharField(required=False, default="", allow_blank=True)
 
+    # Optional metadata for history (passed from extract-info results)
+    title = serializers.CharField(required=False, default="", allow_blank=True)
+    thumbnail = serializers.URLField(required=False, default="", allow_blank=True)
+    duration = serializers.IntegerField(required=False, default=None, allow_null=True)
+    uploader = serializers.CharField(required=False, default="", allow_blank=True)
+    source_site = serializers.CharField(required=False, default="", allow_blank=True)
+
 
 class DownloadSerializer(serializers.ModelSerializer):
     class Meta:
