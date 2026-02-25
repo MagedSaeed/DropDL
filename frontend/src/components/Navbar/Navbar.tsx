@@ -81,6 +81,7 @@ export default function Navbar() {
             to="/app"
             className="flex items-center gap-2 text-base font-bold tracking-tight text-zinc-900 hover:text-zinc-600 transition-colors dark:text-zinc-100 dark:hover:text-zinc-400"
           >
+            <img src="/favicon.svg" alt="" className="h-6 w-6" />
             DropDL
           </Link>
 
