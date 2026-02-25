@@ -15,11 +15,15 @@ export default function HistoryPage() {
         <h1 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Download History</h1>
         {[1, 2, 3].map((i) => (
           <div key={i} className="card animate-pulse">
-            <div className="flex gap-4">
-              <div className="w-24 h-16 bg-zinc-200 dark:bg-zinc-700 rounded" />
-              <div className="flex-1 space-y-2">
-                <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded w-3/4" />
-                <div className="h-3 bg-zinc-200 dark:bg-zinc-700 rounded w-1/2" />
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="sm:w-56 aspect-video bg-zinc-200 dark:bg-zinc-700 rounded-lg" />
+              <div className="flex-1 space-y-3">
+                <div className="h-5 bg-zinc-200 dark:bg-zinc-700 rounded w-3/4" />
+                <div className="h-4 bg-zinc-200 dark:bg-zinc-700 rounded w-1/2" />
+                <div className="flex gap-2">
+                  <div className="h-6 w-16 bg-zinc-200 dark:bg-zinc-700 rounded" />
+                  <div className="h-6 w-20 bg-zinc-200 dark:bg-zinc-700 rounded" />
+                </div>
               </div>
             </div>
           </div>
@@ -54,20 +58,27 @@ export default function HistoryPage() {
           </p>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {records.map((record) => (
-            <div key={record.id} className="card flex items-center gap-4">
+            <div key={record.id} className="card flex flex-col sm:flex-row gap-4 overflow-hidden">
               {/* Thumbnail */}
               {record.thumbnail ? (
-                <img
-                  src={record.thumbnail}
-                  alt=""
-                  className="w-24 h-16 rounded object-cover bg-zinc-100 dark:bg-zinc-700 shrink-0"
-                  loading="lazy"
-                />
+                <a
+                  href={record.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 sm:w-56 block"
+                >
+                  <img
+                    src={record.thumbnail}
+                    alt={record.title}
+                    className="w-full sm:w-56 h-auto rounded-lg object-cover aspect-video bg-zinc-100 dark:bg-zinc-700 hover:opacity-80 transition-opacity"
+                    loading="lazy"
+                  />
+                </a>
               ) : (
-                <div className="w-24 h-16 rounded bg-zinc-100 dark:bg-zinc-700 shrink-0 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-zinc-300 dark:text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="shrink-0 sm:w-56 aspect-video rounded-lg bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center">
+                  <svg className="w-10 h-10 text-zinc-300 dark:text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                   </svg>
                 </div>
@@ -75,21 +86,55 @@ export default function HistoryPage() {
 
               {/* Info */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">
-                  {record.title || record.url}
-                </p>
-                <div className="flex items-center gap-3 text-xs text-zinc-400 dark:text-zinc-500 mt-1">
-                  {record.source_site && <span>{record.source_site}</span>}
-                  {record.duration != null && <span>{formatDuration(record.duration)}</span>}
-                  {record.file_size != null && <span>{formatFileSize(record.file_size)}</span>}
-                  <span>{new Date(record.created_at).toLocaleDateString()}</span>
+                <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 line-clamp-2 mb-1.5">
+                  <a
+                    href={record.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
+                    {record.title || record.url}
+                  </a>
+                </h3>
+
+                {record.uploader && (
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
+                    {record.uploader}
+                  </p>
+                )}
+
+                <div className="flex flex-wrap items-center gap-2 text-xs">
+                  {record.duration != null && (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {formatDuration(record.duration)}
+                    </span>
+                  )}
+
+                  {record.source_site && (
+                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-zinc-100 text-zinc-700 font-medium dark:bg-zinc-700 dark:text-zinc-300">
+                      {record.source_site}
+                    </span>
+                  )}
+
+                  {record.file_size != null && (
+                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
+                      {formatFileSize(record.file_size)}
+                    </span>
+                  )}
+
+                  <span className="inline-flex items-center px-2 py-1 rounded-md bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
+                    {new Date(record.created_at).toLocaleDateString()}
+                  </span>
                 </div>
               </div>
 
-              {/* Actions */}
+              {/* Delete button */}
               <button
                 onClick={() => deleteRecord(record.id)}
-                className="shrink-0 p-2 text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                className="shrink-0 self-start p-2 text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-700"
                 aria-label="Delete from history"
                 title="Delete from history"
               >
