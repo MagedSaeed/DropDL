@@ -1,4 +1,5 @@
 import logging
+from urllib.parse import quote
 
 from django.http import Http404, StreamingHttpResponse
 from rest_framework import status
@@ -91,7 +92,11 @@ class StreamDownloadView(APIView):
 
         # Always use octet-stream so browsers never try to play the file inline
         response = StreamingHttpResponse(generator, content_type="application/octet-stream")
-        response["Content-Disposition"] = f'attachment; filename="{filename}"'
+        # RFC 5987: ASCII fallback + UTF-8 encoded name for proper special character handling
+        ascii_filename = filename.encode("ascii", "replace").decode("ascii").replace('"', "'")
+        response["Content-Disposition"] = (
+            f'attachment; filename="{ascii_filename}"; filename*=UTF-8\'\'{quote(filename)}'
+        )
         return response
 
 
