@@ -85,6 +85,7 @@ class StreamDownloadView(APIView):
                 user=request.user,
                 url=data["url"],
                 title=data.get("title", ""),
+                description=data.get("description", ""),
                 thumbnail=data.get("thumbnail", ""),
                 duration=data.get("duration"),
                 uploader=data.get("uploader", ""),

@@ -42,6 +42,7 @@ export default function DownloadPage() {
         url: url.trim(),
         ...options,
         title: videoInfo?.title,
+        description: videoInfo?.description,
         thumbnail: videoInfo?.thumbnail,
         duration: videoInfo?.duration,
         uploader: videoInfo?.uploader,

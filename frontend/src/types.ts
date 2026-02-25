@@ -61,6 +61,7 @@ export interface DownloadOptions {
   rate_limit: string
   // Optional metadata saved to history
   title?: string
+  description?: string
   thumbnail?: string
   duration?: number | null
   uploader?: string
@@ -72,6 +73,7 @@ export interface DownloadRecord {
   url: string
   source_site: string
   title: string
+  description: string
   thumbnail: string
   duration: number | null
   uploader: string

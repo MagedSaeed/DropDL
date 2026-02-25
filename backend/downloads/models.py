@@ -32,6 +32,7 @@ class Download(models.Model):
 
     # Video metadata
     title = models.CharField(max_length=500, blank=True, default="")
+    description = models.TextField(blank=True, default="")
     thumbnail = models.URLField(max_length=2000, blank=True, default="")
     duration = models.PositiveIntegerField(null=True, blank=True, help_text="Duration in seconds")
     uploader = models.CharField(max_length=300, blank=True, default="")

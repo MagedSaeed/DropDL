@@ -1,6 +1,24 @@
 import { useEffect } from 'react'
 import { useHistory } from '../../hooks/useHistory'
 import { formatDuration, formatFileSize } from '../../utils/formatters'
+import type { DownloadRecord } from '../../types'
+
+const API_BASE = import.meta.env.VITE_API_URL || ''
+
+function buildDownloadUrl(record: DownloadRecord): string {
+  const params = new URLSearchParams()
+  params.set('url', record.url)
+  const opts = record.options as Record<string, unknown>
+  for (const [key, value] of Object.entries(opts)) {
+    if (value == null || value === '') continue
+    if (Array.isArray(value)) {
+      for (const item of value) params.append(key, String(item))
+    } else {
+      params.append(key, String(value))
+    }
+  }
+  return `${API_BASE}/api/download/?${params.toString()}`
+}
 
 export default function HistoryPage() {
   const { records, loading, error, fetchHistory, deleteRecord } = useHistory()
@@ -129,19 +147,37 @@ export default function HistoryPage() {
                     {new Date(record.created_at).toLocaleDateString()}
                   </span>
                 </div>
+
+                {record.description && (
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 line-clamp-2">
+                    {record.description}
+                  </p>
+                )}
               </div>
 
-              {/* Delete button */}
-              <button
-                onClick={() => deleteRecord(record.id)}
-                className="shrink-0 self-start p-2 text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-700"
-                aria-label="Delete from history"
-                title="Delete from history"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </button>
+              {/* Actions */}
+              <div className="shrink-0 flex sm:flex-col items-center gap-1 self-start">
+                <a
+                  href={buildDownloadUrl(record)}
+                  className="p-2 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                  aria-label="Download again"
+                  title="Download again"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </a>
+                <button
+                  onClick={() => deleteRecord(record.id)}
+                  className="p-2 text-zinc-400 hover:text-red-500 dark:hover:text-red-400 transition-colors rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                  aria-label="Delete from history"
+                  title="Delete from history"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
             </div>
           ))}
         </div>

@@ -31,6 +31,7 @@ class DownloadRequestSerializer(serializers.Serializer):
 
     # Optional metadata for history (passed from extract-info results)
     title = serializers.CharField(required=False, default="", allow_blank=True)
+    description = serializers.CharField(required=False, default="", allow_blank=True)
     thumbnail = serializers.URLField(required=False, default="", allow_blank=True)
     duration = serializers.IntegerField(required=False, default=None, allow_null=True)
     uploader = serializers.CharField(required=False, default="", allow_blank=True)
@@ -41,8 +42,8 @@ class DownloadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Download
         fields = [
-            "id", "url", "source_site", "title", "thumbnail",
-            "duration", "uploader", "status", "file_name",
+            "id", "url", "source_site", "title", "description",
+            "thumbnail", "duration", "uploader", "status", "file_name",
             "file_size", "mime_type", "options", "created_at",
         ]
         read_only_fields = fields
