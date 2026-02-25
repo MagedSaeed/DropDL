@@ -1,6 +1,8 @@
 import logging
 
 from django.http import Http404, StreamingHttpResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -37,6 +39,7 @@ class ExtractInfoView(APIView):
         return Response(info)
 
 
+@method_decorator(xframe_options_sameorigin, name="dispatch")
 class StreamDownloadView(APIView):
     """POST /api/download/ - Stream a file download to the browser."""
 
