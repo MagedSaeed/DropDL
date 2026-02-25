@@ -89,7 +89,8 @@ class StreamDownloadView(APIView):
                 status=Download.Status.COMPLETED,
             )
 
-        response = StreamingHttpResponse(generator, content_type=content_type)
+        # Always use octet-stream so browsers never try to play the file inline
+        response = StreamingHttpResponse(generator, content_type="application/octet-stream")
         response["Content-Disposition"] = f'attachment; filename="{filename}"'
         return response
 
