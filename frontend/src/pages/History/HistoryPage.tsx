@@ -132,7 +132,13 @@ export default function HistoryPage() {
                   )}
 
                   {record.source_site && (
-                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-zinc-100 text-zinc-700 font-medium dark:bg-zinc-700 dark:text-zinc-300">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-zinc-100 text-zinc-700 font-medium dark:bg-zinc-700 dark:text-zinc-300">
+                      <img
+                        src={`https://www.google.com/s2/favicons?domain=${new URL(record.url).hostname}&sz=16`}
+                        alt=""
+                        className="w-4 h-4"
+                        loading="lazy"
+                      />
                       {record.source_site}
                     </span>
                   )}
