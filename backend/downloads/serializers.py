@@ -33,7 +33,7 @@ class DownloadRequestSerializer(serializers.Serializer):
     title = serializers.CharField(required=False, default="", allow_blank=True)
     description = serializers.CharField(required=False, default="", allow_blank=True)
     thumbnail = serializers.URLField(required=False, default="", allow_blank=True)
-    duration = serializers.IntegerField(required=False, default=None, allow_null=True)
+    duration = serializers.FloatField(required=False, default=None, allow_null=True)
     uploader = serializers.CharField(required=False, default="", allow_blank=True)
     source_site = serializers.CharField(required=False, default="", allow_blank=True)
 

@@ -87,7 +87,7 @@ class StreamDownloadView(APIView):
                 title=data.get("title", ""),
                 description=data.get("description", ""),
                 thumbnail=data.get("thumbnail", ""),
-                duration=data.get("duration"),
+                duration=round(data["duration"]) if data.get("duration") is not None else None,
                 uploader=data.get("uploader", ""),
                 source_site=data.get("source_site", ""),
                 options=options,
