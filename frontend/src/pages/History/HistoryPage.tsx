@@ -149,8 +149,17 @@ export default function HistoryPage() {
                     </span>
                   )}
 
+                  {record.download_count > 1 && (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-blue-100 text-blue-700 font-medium dark:bg-blue-900/40 dark:text-blue-300">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      {record.download_count}x
+                    </span>
+                  )}
+
                   <span className="inline-flex items-center px-2 py-1 rounded-md bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
-                    {new Date(record.created_at).toLocaleDateString()}
+                    {new Date(record.last_downloaded_at).toLocaleDateString()}
                   </span>
                 </div>
 

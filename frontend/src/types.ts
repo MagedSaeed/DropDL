@@ -82,5 +82,7 @@ export interface DownloadRecord {
   file_size: number | null
   mime_type: string
   options: Record<string, unknown>
+  download_count: number
   created_at: string
+  last_downloaded_at: string
 }

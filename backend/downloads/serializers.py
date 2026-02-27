@@ -44,6 +44,7 @@ class DownloadSerializer(serializers.ModelSerializer):
         fields = [
             "id", "url", "source_site", "title", "description",
             "thumbnail", "duration", "uploader", "status", "file_name",
-            "file_size", "mime_type", "options", "created_at",
+            "file_size", "mime_type", "options", "download_count",
+            "created_at", "last_downloaded_at",
         ]
         read_only_fields = fields

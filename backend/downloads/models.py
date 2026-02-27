@@ -2,6 +2,7 @@ import uuid
 
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 
 class Download(models.Model):
@@ -46,12 +47,17 @@ class Download(models.Model):
     file_size = models.BigIntegerField(null=True, blank=True)
     mime_type = models.CharField(max_length=100, blank=True, default="")
 
+    download_count = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
+    last_downloaded_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["-last_downloaded_at"]
         indexes = [
-            models.Index(fields=["user", "-created_at"]),
+            models.Index(fields=["user", "-last_downloaded_at"]),
+        ]
+        constraints = [
+            models.UniqueConstraint(fields=["user", "url"], name="unique_user_url"),
         ]
 
     def __str__(self):
