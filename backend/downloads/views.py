@@ -1,7 +1,9 @@
 import logging
 from urllib.parse import quote
 
+from django.db.models import F
 from django.http import Http404, StreamingHttpResponse
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -79,22 +81,30 @@ class StreamDownloadView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Save to history if user is authenticated
+        # Save to history if user is authenticated (deduplicated by user+url)
         if request.user.is_authenticated:
-            Download.objects.create(
+            metadata = {
+                "title": data.get("title", ""),
+                "description": data.get("description", ""),
+                "thumbnail": data.get("thumbnail", ""),
+                "duration": data.get("duration"),
+                "uploader": data.get("uploader", ""),
+                "source_site": data.get("source_site", ""),
+                "options": options,
+                "file_name": filename,
+                "mime_type": content_type,
+                "status": Download.Status.COMPLETED,
+                "last_downloaded_at": timezone.now(),
+            }
+            _, created = Download.objects.update_or_create(
                 user=request.user,
                 url=data["url"],
-                title=data.get("title", ""),
-                description=data.get("description", ""),
-                thumbnail=data.get("thumbnail", ""),
-                duration=data.get("duration"),
-                uploader=data.get("uploader", ""),
-                source_site=data.get("source_site", ""),
-                options=options,
-                file_name=filename,
-                mime_type=content_type,
-                status=Download.Status.COMPLETED,
+                defaults=metadata,
             )
+            if not created:
+                Download.objects.filter(
+                    user=request.user, url=data["url"]
+                ).update(download_count=F("download_count") + 1)
 
         # Always use octet-stream so browsers never try to play the file inline
         response = StreamingHttpResponse(generator, content_type="application/octet-stream")
